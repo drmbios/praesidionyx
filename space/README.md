@@ -7,7 +7,7 @@ sdk: static
 app_file: index.html
 pinned: false
 license: apache-2.0
-short_description: Supervised agents: capabilities, taint and human decisions.
+short_description: "Supervised agents: capabilities, taint and human decisions."
 ---
 
 # Praesidionyx
