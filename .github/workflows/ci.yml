@@ -1,0 +1,56 @@
+name: CI
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  build-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            platform: linux/amd64
+          - runner: ubuntu-24.04-arm
+            platform: linux/arm64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    env:
+      PRAESIDIONYX_PLATFORM: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Load explicit sandbox AppArmor profile when enforced by the host
+        run: |
+          if docker info --format '{{json .SecurityOptions}}' | grep -q apparmor; then
+            sudo apt-get update
+            sudo apt-get install -y apparmor
+            sudo apparmor_parser -r docker/apparmor-praesidionyx
+            echo 'PRAESIDIONYX_APPARMOR_PROFILE=praesidionyx-sandbox' >> "$GITHUB_ENV"
+            echo 'COMPOSE_FILE=docker-compose.yml:docker-compose.apparmor.yml' >> "$GITHUB_ENV"
+          fi
+      - name: Browser policy tests and JavaScript syntax
+        run: |
+          node --test space/tests/*.test.mjs
+          node --check space/app.mjs
+      - name: Offline tests, format, strict Clippy
+        run: ./scripts/check.sh
+      - name: Offline enforcement in real sandboxes
+        run: ./scripts/check-sandbox.sh
+      - name: Build and boot target image
+        run: docker compose up --build -d --wait
+      - name: Offline end-to-end acceptance demos
+        run: |
+          sh scripts/demo.sh
+          docker compose exec -T --user 10001:10001 praesidionyxd praesidionyx features
+      - name: Container logs
+        if: always()
+        run: docker compose logs --no-color
+      - name: Cleanup
+        if: always()
+        run: docker compose down
+  cargo-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit locked dependencies against RustSec
+        run: ./scripts/audit.sh

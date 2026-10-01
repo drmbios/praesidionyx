@@ -1,0 +1,43 @@
+
+$ python3 examples/lifecycle/demo.py
+Spawned: ab5c8298-816c-4b7e-9491-cc7a6ab79768 running mock:7928d74796a5330f6b8fe02c78a74c058afc5c0adb49da0f761cf2f665862ece
+Exited: ab5c8298-816c-4b7e-9491-cc7a6ab79768 finished
+PASS: HTTP spawn/exit and gRPC supervisor listing
+PASS: CLI spawn/exit over Unix-socket gRPC
+PASS: signed audit verification ( 892 records)
+
+$ python3 examples/capabilities/demo.py
+PASS: missing capabilities denied; parent and attenuated tokens share call quota
+PASS: one changed byte makes the offline audit CLI exit nonzero
+PASS: live audit log still verifies
+
+$ python3 examples/tools/demo.py
+PASS: MCP file write/read; Landlock, seccomp, seven separate namespaces and cgroup limits
+PASS: missing capability, wrong session/agent/path, traversal and quota replay denied
+PASS: private-network HTTP rejected even with a signed URL capability
+PASS: Unix gRPC Invoke, lifecycle cleanup and signed audit verification
+
+$ python3 examples/injection-demo/demo.py
+Read web fixture with hidden fs.write instruction; context is untrusted.
+PASS: hidden instruction gets needs_approval before any write
+PASS: CLI denial blocks retry; target file was never created
+
+$ python3 examples/researcher/demo.py
+PASS: fetched page and derived summary retain untrusted provenance
+PASS: supervisor CLI approval permits exactly the requested summary write
+
+$ python3 examples/memory/demo.py
+PASS: old context paged out; sqlite-vec recall fits the requested limit
+PASS: rollback preserves taint; another agent cannot recover this snapshot or memory
+
+$ python3 examples/scheduler/demo.py
+PASS: parent spawns child; delegated read token cannot write or change resource
+PASS: typed messages propagate taint; pause/resume and parent kill cascade work
+PASS: final tool call completes; scheduler kills the exhausted agent
+
+$ praesidionyx audit verify (supervisor Unix socket)
+{
+  "head_hash": "e110da0b31aff651a796fde0f30b4dc6ed557bb2e17f578c9b8eb42128238859",
+  "public_key": "a0085a06e90d9bbca6df37969625a1ef7d87d23fcecbe300629a74b111479165",
+  "records": 1051
+}

@@ -1,0 +1,18 @@
+[package]
+name = "praesidionyx-sandbox"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+rusqlite.workspace = true
+sqlite-vec = "0.1.9"
+anyhow.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+tokio.workspace = true
+serde.workspace = true
+[target.'cfg(target_os = "linux")'.dependencies]
+libc = "0.2"
+landlock = "0.4"
+libseccomp = "0.4"

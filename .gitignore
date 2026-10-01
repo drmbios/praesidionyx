@@ -1,0 +1,6 @@
+/target/
+.env
+/state/
+*.sock
+__pycache__/
+*.pyc

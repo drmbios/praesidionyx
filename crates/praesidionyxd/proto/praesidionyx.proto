@@ -1,0 +1,94 @@
+syntax = "proto3";
+package praesidionyx.v1;
+
+// Bootstrap authentication is separate from each spawned agent's session token.
+service AgentSyscalls {
+  rpc Spawn(SpawnRequest) returns (SpawnResponse);
+  rpc Exit(ExitRequest) returns (Agent);
+  rpc Invoke(InvokeRequest) returns (InvokeResponse);
+  rpc Memory(MemoryRequest) returns (MemoryResponse);
+  rpc Message(MessageRequest) returns (MemoryResponse);
+  rpc SpawnChild(SpawnChildRequest) returns (SpawnChildResponse);
+}
+// This service is registered ONLY on the supervisor socket.
+service Supervisor {
+  rpc ListAgents(Empty) returns (AgentList);
+  rpc Features(Empty) returns (FeatureReport);
+  rpc IssueCapability(IssueCapabilityRequest) returns (CapabilityResponse);
+  rpc IssueToolCapability(IssueToolCapabilityRequest) returns (CapabilityResponse);
+  rpc AuditVerify(Empty) returns (AuditVerification);
+  rpc Control(ControlRequest) returns (Agent);
+  rpc ListApprovals(Empty) returns (ApprovalList);
+  rpc DecideApproval(ApprovalDecision) returns (Approval);
+  rpc AuditTail(AuditTailRequest) returns (AuditTailResponse);
+}
+message Empty {}
+message Budget {
+  uint64 tokens = 1;
+  uint64 wall_time_ms = 2;
+  uint64 tool_calls = 3;
+  uint64 cost_microusd = 4;
+}
+message AgentSpec {
+  string name = 1;
+  string provider = 2;
+  string model = 3;
+  string prompt = 4;
+  uint32 context_window = 5;
+}
+message SpawnRequest {
+  AgentSpec spec = 1;
+  Budget budget = 2;
+  // Required Biscuit token, independent of caller authentication.
+  string capability = 3;
+}
+message SpawnResponse { Agent agent = 1; string session_token = 2; string exit_capability = 3; string local_capability = 4; }
+message ExitRequest { string agent_id = 1; int32 status = 2; string capability = 3; }
+message Agent {
+  string agent_id = 1;
+  string identity_public_key = 2;
+  AgentSpec spec = 3;
+  Budget budget = 4;
+  string state = 5;
+  string mock_response = 6;
+  optional int32 exit_status = 7;
+  string context_label = 8;
+  uint64 context_revision = 9;
+  Budget used = 10;
+  string parent_id = 11;
+}
+message AgentList { repeated Agent agents = 1; }
+message Feature {
+  string name = 1;
+  string support = 2;
+  string usability = 3;
+  string detail = 4;
+}
+message FeatureReport {
+  string platform = 1;
+  repeated Feature features = 2;
+  bool tool_execution_enabled = 3;
+}
+
+message IssueCapabilityRequest { uint64 max_calls = 1; uint64 ttl_seconds = 2; Budget budget = 3; }
+message CapabilityResponse { string capability = 1; string grant_id = 2; uint64 expires_at = 3; string root_public_key = 4; }
+message AuditVerification { uint64 records = 1; string head_hash = 2; string public_key = 3; }
+message AuditTailRequest { uint32 limit = 1; }
+message AuditTailResponse { repeated string records_json = 1; }
+
+message InvokeRequest { string agent_id = 1; string tool = 2; string args_json = 3; string capability = 4; string approval_id = 5; }
+message InvokeResponse { string result_json = 1; string label = 2; string outcome = 3; string request_id = 4; }
+message IssueToolCapabilityRequest { string agent_id = 1; string tool = 2; string resource = 3; uint64 max_calls = 4; uint64 ttl_seconds = 5; }
+
+message Approval { string request_id = 1; string agent_id = 2; string tool = 3; string args_json = 4; string status = 5; uint64 expires_at = 6; uint64 context_revision = 7; }
+message ApprovalList { repeated Approval requests = 1; }
+message ApprovalDecision { string request_id = 1; bool approve = 2; }
+
+// Owned-memory operations: remember, recall, context, checkpoint, rollback.
+message MemoryRequest { string agent_id = 1; string capability = 2; string operation = 3; string content = 4; string label = 5; uint64 max_tokens = 6; string snapshot_id = 7; }
+message MemoryResponse { string result_json = 1; }
+
+message ControlRequest { string agent_id = 1; string action = 2; }
+message MessageRequest { string agent_id = 1; string capability = 2; string operation = 3; string target_id = 4; string kind = 5; string content = 6; }
+message SpawnChildRequest { string agent_id = 1; string capability = 2; AgentSpec spec = 3; Budget budget = 4; string tool = 5; string resource = 6; string delegated_capability = 7; string approval_id = 8; }
+message SpawnChildResponse { SpawnResponse child = 1; string delegated_capability = 2; string outcome = 3; string request_id = 4; }

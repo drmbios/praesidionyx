@@ -1,0 +1,13 @@
+[
+  "read", "write", "readv", "writev", "pread64", "pwrite64", "close", "close_range",
+  "openat", "openat2", "newfstatat", "fstat", "statx", "lseek", "getdents64", "readlinkat",
+  "fsync", "fdatasync", "ftruncate", "fcntl", "ioctl",
+  "mmap", "mprotect", "munmap", "mremap", "madvise", "brk",
+  "rt_sigaction", "rt_sigprocmask", "rt_sigreturn", "sigaltstack",
+  "futex", "set_robust_list", "rseq", "set_tid_address", "sched_yield", "sched_getaffinity",
+  "clock_gettime", "clock_nanosleep", "nanosleep", "gettimeofday", "getrandom",
+  "getpid", "getppid", "gettid", "getuid", "geteuid", "getgid", "getegid",
+  "prlimit64", "uname", "exit", "exit_group",
+  "epoll_create1", "epoll_ctl", "epoll_wait", "epoll_pwait", "epoll_pwait2", "eventfd2", "pipe2", "poll", "ppoll",
+  "recvfrom", "sendto", "recvmsg", "sendmsg", "shutdown", "getsockname", "getpeername", "getsockopt", "setsockopt"
+]

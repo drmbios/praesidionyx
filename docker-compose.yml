@@ -1,0 +1,51 @@
+services:
+  praesidionyxd:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      # Build downloads only; the runtime retains its private bridge network.
+      network: ${PRAESIDIONYX_BUILD_NETWORK:-default}
+      args:
+        PRAESIDIONYX_BUILD_PROFILE: ${PRAESIDIONYX_BUILD_PROFILE:-quickstart}
+    platform: ${PRAESIDIONYX_PLATFORM:-linux/arm64}
+    environment:
+      PRAESIDIONYX_PROVIDER: ${PRAESIDIONYX_PROVIDER:-mock}
+      PRAESIDIONYX_AGENT_HTTP: 0.0.0.0:8080
+      PRAESIDIONYX_SUPERVISOR_HTTP: 0.0.0.0:8081
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      PRAESIDIONYX_MODEL: ${PRAESIDIONYX_MODEL:-mock-v1}
+      PRAESIDIONYX_INPUT_MICROUSD_PER_TOKEN: ${PRAESIDIONYX_INPUT_MICROUSD_PER_TOKEN:-0}
+      PRAESIDIONYX_OUTPUT_MICROUSD_PER_TOKEN: ${PRAESIDIONYX_OUTPUT_MICROUSD_PER_TOKEN:-0}
+      RUST_LOG: ${PRAESIDIONYX_LOG:-info}
+    ports:
+      - "127.0.0.1:${PRAESIDIONYX_AGENT_PORT:-18080}:8080"
+      - "127.0.0.1:${PRAESIDIONYX_SUPERVISOR_PORT:-18081}:8081"
+    volumes:
+      - praesidionyx-state:/var/lib/praesidionyx
+    read_only: true
+    cap_drop: [ALL]
+    # Only the entrypoint uses these; it drops all capabilities before praesidionyxd.
+    cap_add: [SYS_ADMIN, SETUID, SETGID, SETPCAP, CHOWN]
+    cgroup: private
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,size=64m,mode=1777
+    security_opt:
+      - no-new-privileges:true
+      - seccomp=./docker/seccomp-container.json
+    pids_limit: 128
+    mem_limit: 256m
+    cpus: 1.0
+    networks: [praesidionyx]
+    healthcheck:
+      test: ["CMD", "setpriv", "--reuid=10001", "--regid=10001", "--clear-groups", "--inh-caps=-all", "--ambient-caps=-all", "--bounding-set=-all", "curl", "--fail", "--silent", "http://127.0.0.1:8080/healthz"]
+      interval: 5s
+      timeout: 2s
+      retries: 12
+      start_period: 5s
+    stop_grace_period: 5s
+networks:
+  praesidionyx:
+    driver: bridge
+volumes:
+  praesidionyx-state:

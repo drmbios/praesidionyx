@@ -1,0 +1,22 @@
+[package]
+name = "praesidionyx-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "praesidionyx"
+path = "src/main.rs"
+
+[dependencies]
+praesidionyx-caps = { path = "../praesidionyx-caps" }
+praesidionyx-audit = { path = "../praesidionyx-audit" }
+hex.workspace = true
+praesidionyxd = { path = "../praesidionyxd" }
+anyhow.workspace = true
+clap.workspace = true
+hyper-util.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+tonic.workspace = true
+tower.workspace = true

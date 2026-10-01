@@ -1,0 +1,18 @@
+[package]
+name = "praesidionyx-audit"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+ed25519-dalek.workspace = true
+hex.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+fs2 = "0.4"
+
+[dev-dependencies]
+tempfile.workspace = true
+rand.workspace = true

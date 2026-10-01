@@ -1,0 +1,5 @@
+# Explicit opt-in on Linux after loading docker/apparmor-praesidionyx.
+services:
+  praesidionyxd:
+    security_opt:
+      - apparmor=praesidionyx-sandbox

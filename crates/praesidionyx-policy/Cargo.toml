@@ -1,0 +1,10 @@
+[package]
+name = "praesidionyx-policy"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+praesidionyx-caps = { path = "../praesidionyx-caps" }
+anyhow.workspace = true
+serde.workspace = true
