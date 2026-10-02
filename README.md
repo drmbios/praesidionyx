@@ -1,5 +1,7 @@
 # Praesidionyx
 
+[![CI](https://github.com/drmbios/praesidionyx/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/drmbios/praesidionyx/actions/workflows/ci.yml)
+
 An operating layer for AI agents, with humans supervising through a separate API.
 The seven-milestone local MVP implements capability-scoped tools, Linux confinement,
 sticky taint and exact-request approvals, context paging, budgets and child delegation.

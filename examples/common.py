@@ -32,7 +32,14 @@ def spawn(api, name, **kwargs):
     # own explicit runtime tests and is not measured by these multi-step flows.
     kwargs.setdefault("budget", {"tokens":4096, "wall_time_ms":300000,
                                  "tool_calls":16, "cost_microusd":0})
-    return api.spawn(json.loads(compose("praesidionyx", "caps", "issue"))["capability"], name=name, **kwargs)
+    budget = kwargs["budget"]
+    # The supervisor grant must bind the same limits as the requested spawn.
+    # Increasing a requested budget without increasing its signed ceiling fails.
+    limits = []
+    for field in ("tokens", "wall_time_ms", "tool_calls", "cost_microusd"):
+        limits.extend(("--" + field.replace("_", "-"), str(budget[field])))
+    capability = json.loads(compose("praesidionyx", "caps", "issue", *limits))["capability"]
+    return api.spawn(capability, name=name, **kwargs)
 
 
 def grant(credentials, tool, resource, calls=1):
