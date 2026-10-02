@@ -121,7 +121,12 @@ Rust also reports its future incompatibility warning. Strict Clippy itself passe
 CI is configured for native Ubuntu 24.04 arm64 and amd64 runners, all tests/demos and
 the audit script. It explicitly loads the Moby-derived AppArmor 4 profile when enforced.
 Remote CI status is visible in [GitHub Actions](https://github.com/drmbios/praesidionyx/actions).
-Native amd64 execution is delegated to CI; local measurements are arm64.
+The first published arm64 CI job and dependency audit passed. The amd64 job passed
+Rust and real confinement checks, then exposed a demo timing assumption: its 10-second
+child deadline elapsed before the multi-step message test on a slower runner. Acceptance
+demos now use five-minute parent budgets and a two-minute child budget. Runtime defaults,
+worker deadlines and explicit short budget-enforcement tests are unchanged. Local
+measurements remain arm64; the current full-run result is linked in GitHub Actions.
 Docker Desktop on this Mac does not enforce AppArmor, so local parser acceptance is
 not proof of AppArmor runtime behavior.
 

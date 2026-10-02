@@ -27,6 +27,11 @@ def client():
 
 
 def spawn(api, name, **kwargs):
+    # Acceptance demos exercise multiple real, fsynced syscalls and supervisor CLI
+    # processes. Slow CI hosts need headroom; short deadline enforcement has its
+    # own explicit runtime tests and is not measured by these multi-step flows.
+    kwargs.setdefault("budget", {"tokens":4096, "wall_time_ms":300000,
+                                 "tool_calls":16, "cost_microusd":0})
     return api.spawn(json.loads(compose("praesidionyx", "caps", "issue"))["capability"], name=name, **kwargs)
 
 

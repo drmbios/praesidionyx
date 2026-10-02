@@ -12,7 +12,7 @@ parent = spawn(api, "parent-demo")
 pid = parent["agent"]["agent_id"]
 delegated = api.spawn_child(parent,
     {"name":"child-demo", "provider":"mock", "model":"mock-v1", "prompt":"read notes", "context_window":256},
-    {"tokens":512, "wall_time_ms":10000, "tool_calls":2, "cost_microusd":0},
+    {"tokens":512, "wall_time_ms":120000, "tool_calls":2, "cost_microusd":0},
     "fs.read", "notes.txt", grant(parent, "fs.read", "notes.txt", calls=3))
 assert delegated["outcome"] == "completed"
 child = delegated["child"]
