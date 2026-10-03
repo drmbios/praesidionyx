@@ -3,132 +3,6 @@
 version = 4
 
 [[package]]
-name = "praesidionyxd"
-version = "0.1.0"
-dependencies = [
- "praesidionyx-audit",
- "praesidionyx-caps",
- "praesidionyx-memory",
- "praesidionyx-policy",
- "praesidionyx-sandbox",
- "anyhow",
- "async-trait",
- "axum",
- "bytes",
- "ed25519-dalek",
- "fs2",
- "hex",
- "http-body-util",
- "hyper",
- "hyper-util",
- "prost 0.14.4",
- "rand 0.8.8",
- "reqwest",
- "rmcp",
- "serde",
- "serde_json",
- "sha2 0.10.9",
- "subtle",
- "tempfile",
- "tokio",
- "tokio-rustls",
- "tokio-stream",
- "tokio-util",
- "tonic",
- "tonic-prost",
- "tonic-prost-build",
- "tower",
- "tracing",
- "tracing-subscriber",
- "url",
- "uuid",
- "webpki-roots",
-]
-
-[[package]]
-name = "praesidionyx-audit"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "ed25519-dalek",
- "fs2",
- "hex",
- "rand 0.8.8",
- "serde",
- "serde_json",
- "sha2 0.10.9",
- "tempfile",
-]
-
-[[package]]
-name = "praesidionyx-caps"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "biscuit-auth",
- "serde",
- "serde_json",
- "uuid",
-]
-
-[[package]]
-name = "praesidionyx-cli"
-version = "0.1.0"
-dependencies = [
- "praesidionyxd",
- "praesidionyx-audit",
- "praesidionyx-caps",
- "anyhow",
- "clap",
- "hex",
- "hyper-util",
- "serde_json",
- "tokio",
- "tonic",
- "tower",
-]
-
-[[package]]
-name = "praesidionyx-memory"
-version = "0.1.0"
-dependencies = [
- "praesidionyx-policy",
- "praesidionyx-sandbox",
- "anyhow",
- "rusqlite",
- "serde",
- "serde_json",
- "sha2 0.10.9",
- "tempfile",
- "uuid",
-]
-
-[[package]]
-name = "praesidionyx-policy"
-version = "0.1.0"
-dependencies = [
- "praesidionyx-caps",
- "anyhow",
- "serde",
-]
-
-[[package]]
-name = "praesidionyx-sandbox"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "landlock",
- "libc",
- "libseccomp",
- "rusqlite",
- "serde",
- "serde_json",
- "sqlite-vec",
- "tokio",
- "uuid",
-]
-
-[[package]]
 name = "aho-corasick"
 version = "1.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1675,6 +1549,132 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "85eae3c4ed2f50dcfe72643da4befc30deadb458a9b590d720cde2f2b1e97da9"
 dependencies = [
  "zerocopy",
+]
+
+[[package]]
+name = "praesidionyx-audit"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "ed25519-dalek",
+ "fs2",
+ "hex",
+ "rand 0.10.3",
+ "serde",
+ "serde_json",
+ "sha2 0.10.9",
+ "tempfile",
+]
+
+[[package]]
+name = "praesidionyx-caps"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "biscuit-auth",
+ "serde",
+ "serde_json",
+ "uuid",
+]
+
+[[package]]
+name = "praesidionyx-cli"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "hex",
+ "hyper-util",
+ "praesidionyx-audit",
+ "praesidionyx-caps",
+ "praesidionyxd",
+ "serde_json",
+ "tokio",
+ "tonic",
+ "tower",
+]
+
+[[package]]
+name = "praesidionyx-memory"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "praesidionyx-policy",
+ "praesidionyx-sandbox",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "sha2 0.10.9",
+ "tempfile",
+ "uuid",
+]
+
+[[package]]
+name = "praesidionyx-policy"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "praesidionyx-caps",
+ "serde",
+]
+
+[[package]]
+name = "praesidionyx-sandbox"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "landlock",
+ "libc",
+ "libseccomp",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "sqlite-vec",
+ "tokio",
+ "uuid",
+]
+
+[[package]]
+name = "praesidionyxd"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "axum",
+ "bytes",
+ "ed25519-dalek",
+ "fs2",
+ "hex",
+ "http-body-util",
+ "hyper",
+ "hyper-util",
+ "praesidionyx-audit",
+ "praesidionyx-caps",
+ "praesidionyx-memory",
+ "praesidionyx-policy",
+ "praesidionyx-sandbox",
+ "prost 0.14.4",
+ "rand 0.10.3",
+ "reqwest",
+ "rmcp",
+ "serde",
+ "serde_json",
+ "sha2 0.10.9",
+ "subtle",
+ "tempfile",
+ "tokio",
+ "tokio-rustls",
+ "tokio-stream",
+ "tokio-util",
+ "tonic",
+ "tonic-prost",
+ "tonic-prost-build",
+ "tower",
+ "tracing",
+ "tracing-subscriber",
+ "url",
+ "uuid",
+ "webpki-roots",
 ]
 
 [[package]]
