@@ -40,3 +40,7 @@ unsuppressed: disabling Biscuit 6.0.0's macro feature currently breaks its compi
 Non-provider secret patterns and validity checks were not enabled by GitHub's API
 in this repository configuration. Preserve the limitations in the threat model and
 verification report when deploying or extending the runtime.
+
+The [initial CodeQL triage](codeql-triage.md) records reviewed findings and the
+source-to-sink rationale for each dismissal. Revisit those decisions when changing
+the trust boundary; do not suppress a query to make a merge check pass.
