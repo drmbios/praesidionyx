@@ -19,3 +19,10 @@ provider billing and cooperative deadlines. Terminal recordings must never expos
 The Space source is in `space/`. Run `node --test space/tests/*.test.mjs` and
 `node --check space/app.mjs` after policy/UI changes. Keep simulation labels and
 recorded-runtime evidence accurate. See [hosting](docs/hosting.md) before publishing.
+
+Submit changes to `main` through a pull request. Both native Linux CI jobs, RustSec,
+dependency review, secret scanning and CodeQL must pass the repository's merge rules.
+Review dependency update PRs before merging; updates are not automatically trusted.
+Keep workflow actions pinned to full commit SHAs and checkout credentials disabled.
+External contributor workflow runs require maintainer approval: inspect their changes
+before authorizing execution. Never use `pull_request_target` to execute contributor code.
