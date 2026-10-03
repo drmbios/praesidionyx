@@ -12,7 +12,7 @@ anyhow = "1"
 async-trait = "0.1"
 axum = "0.8"
 clap = { version = "4", features = ["derive", "env"] }
-ed25519-dalek = { version = "2", features = ["rand_core"] }
+ed25519-dalek = { version = "3", features = ["rand_core"] }
 hex = "0.4"
 hyper-util = { version = "0.1", features = ["tokio"] }
 prost = "0.14"
