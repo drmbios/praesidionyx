@@ -7,6 +7,8 @@ supervisor approval for writes, HTTP and child creation from untrusted context. 
 is exact, one-use, expiring, and cannot create new authority.
 
 Do not include keys, tokens, private prompts or .env files in issue reports.
+If a credential is disclosed, revoke or rotate it at its provider immediately;
+removing a message or commit does not invalidate the credential.
 Private vulnerability reporting is enabled. Report sensitive concerns to maintainer
 [drmbios through a private security advisory](https://github.com/drmbios/praesidionyx/security/advisories/new).
 
@@ -26,3 +28,6 @@ Provider cost estimates and cancellation are not contractual billing guarantees.
 scheduler is cooperative userspace scheduling, not hard realtime. Workspaces have no disk
 quota and writes may be partial after cancellation. See verification.md for actual checks,
 the upstream dependency warning and unverified platforms/provider integrations.
+
+See [repository security](docs/repository-security.md) for GitHub protections,
+automated checks, maintainer responsibilities and the limits of scan results.
