@@ -3,132 +3,6 @@
 version = 4
 
 [[package]]
-name = "praesidionyxd"
-version = "0.1.0"
-dependencies = [
- "praesidionyx-audit",
- "praesidionyx-caps",
- "praesidionyx-memory",
- "praesidionyx-policy",
- "praesidionyx-sandbox",
- "anyhow",
- "async-trait",
- "axum",
- "bytes",
- "ed25519-dalek",
- "fs2",
- "hex",
- "http-body-util",
- "hyper",
- "hyper-util",
- "prost 0.14.4",
- "rand 0.8.8",
- "reqwest",
- "rmcp",
- "serde",
- "serde_json",
- "sha2 0.10.9",
- "subtle",
- "tempfile",
- "tokio",
- "tokio-rustls",
- "tokio-stream",
- "tokio-util",
- "tonic",
- "tonic-prost",
- "tonic-prost-build",
- "tower",
- "tracing",
- "tracing-subscriber",
- "url",
- "uuid",
- "webpki-roots",
-]
-
-[[package]]
-name = "praesidionyx-audit"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "ed25519-dalek",
- "fs2",
- "hex",
- "rand 0.8.8",
- "serde",
- "serde_json",
- "sha2 0.10.9",
- "tempfile",
-]
-
-[[package]]
-name = "praesidionyx-caps"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "biscuit-auth",
- "serde",
- "serde_json",
- "uuid",
-]
-
-[[package]]
-name = "praesidionyx-cli"
-version = "0.1.0"
-dependencies = [
- "praesidionyxd",
- "praesidionyx-audit",
- "praesidionyx-caps",
- "anyhow",
- "clap",
- "hex",
- "hyper-util",
- "serde_json",
- "tokio",
- "tonic",
- "tower",
-]
-
-[[package]]
-name = "praesidionyx-memory"
-version = "0.1.0"
-dependencies = [
- "praesidionyx-policy",
- "praesidionyx-sandbox",
- "anyhow",
- "rusqlite",
- "serde",
- "serde_json",
- "sha2 0.10.9",
- "tempfile",
- "uuid",
-]
-
-[[package]]
-name = "praesidionyx-policy"
-version = "0.1.0"
-dependencies = [
- "praesidionyx-caps",
- "anyhow",
- "serde",
-]
-
-[[package]]
-name = "praesidionyx-sandbox"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "landlock",
- "libc",
- "libseccomp",
- "rusqlite",
- "serde",
- "serde_json",
- "sqlite-vec",
- "tokio",
- "uuid",
-]
-
-[[package]]
 name = "aho-corasick"
 version = "1.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -767,7 +641,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb"
 dependencies = [
  "libc",
- "windows-sys 0.61.2",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -1678,6 +1552,132 @@ dependencies = [
 ]
 
 [[package]]
+name = "praesidionyx-audit"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "ed25519-dalek",
+ "fs2",
+ "hex",
+ "rand 0.8.8",
+ "serde",
+ "serde_json",
+ "sha2 0.10.9",
+ "tempfile",
+]
+
+[[package]]
+name = "praesidionyx-caps"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "biscuit-auth",
+ "serde",
+ "serde_json",
+ "uuid",
+]
+
+[[package]]
+name = "praesidionyx-cli"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "hex",
+ "hyper-util",
+ "praesidionyx-audit",
+ "praesidionyx-caps",
+ "praesidionyxd",
+ "serde_json",
+ "tokio",
+ "tonic",
+ "tower",
+]
+
+[[package]]
+name = "praesidionyx-memory"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "praesidionyx-policy",
+ "praesidionyx-sandbox",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "sha2 0.10.9",
+ "tempfile",
+ "uuid",
+]
+
+[[package]]
+name = "praesidionyx-policy"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "praesidionyx-caps",
+ "serde",
+]
+
+[[package]]
+name = "praesidionyx-sandbox"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "landlock",
+ "libc",
+ "libseccomp",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "sqlite-vec",
+ "tokio",
+ "uuid",
+]
+
+[[package]]
+name = "praesidionyxd"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "async-trait",
+ "axum",
+ "bytes",
+ "ed25519-dalek",
+ "fs2",
+ "hex",
+ "http-body-util",
+ "hyper",
+ "hyper-util",
+ "praesidionyx-audit",
+ "praesidionyx-caps",
+ "praesidionyx-memory",
+ "praesidionyx-policy",
+ "praesidionyx-sandbox",
+ "prost 0.14.4",
+ "rand 0.8.8",
+ "reqwest",
+ "rmcp",
+ "serde",
+ "serde_json",
+ "sha2 0.10.9",
+ "subtle",
+ "tempfile",
+ "tokio",
+ "tokio-rustls",
+ "tokio-stream",
+ "tokio-util",
+ "tonic",
+ "tonic-prost",
+ "tonic-prost-build",
+ "tower",
+ "tracing",
+ "tracing-subscriber",
+ "url",
+ "uuid",
+ "webpki-roots",
+]
+
+[[package]]
 name = "prettyplease"
 version = "0.2.37"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1886,7 +1886,7 @@ dependencies = [
  "once_cell",
  "socket2",
  "tracing",
- "windows-sys 0.61.2",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -2158,7 +2158,7 @@ dependencies = [
  "errno",
  "libc",
  "linux-raw-sys",
- "windows-sys 0.61.2",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -2544,7 +2544,7 @@ dependencies = [
  "getrandom 0.4.3",
  "once_cell",
  "rustix",
- "windows-sys 0.61.2",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -2644,9 +2644,9 @@ checksum = "fd3ca314f692efd6c868f8408f53fe444634a845f96c028b97d35f6a1f79f0ee"
 
 [[package]]
 name = "tokio"
-version = "1.53.1"
+version = "1.53.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "202caea871b69668250d242070849eb495be178ed697a3e98aebce5bc81a0bed"
+checksum = "e95f91fcc7a621e8b030f6aa23c71fe9838ae2fb4d8118b75602a328f5144044"
 dependencies = [
  "bytes",
  "libc",
